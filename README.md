@@ -16,6 +16,36 @@ The project is presented as a realistic enterprise architecture case, showing ho
 - Power BI data transformation and modelling that connects data from different sources into a unified reporting layer
 - reporting architecture design for billing oversight, exception analysis, and operational reporting consistency
 
+## End-to-End Reporting Flow
+
+The diagram below shows the reporting pattern that sits at the centre of the project, tracing how upstream systems move into governed Fabric data, then into semantic models, and finally into billing reports and dashboards.
+
+```mermaid
+flowchart LR
+    CRM["CRM<br/>Customers<br/>Orders<br/>Contracts"]
+    SN["ServiceNow<br/>Services<br/>Service items<br/>Billing attributes"]
+    DG["Datagate<br/>Usage<br/>Pricing<br/>Billing<br/>Exceptions"]
+    SAP["SAP<br/>Invoices<br/>Revenue<br/>Financial posting"]
+    SP["SharePoint<br/>Reference files<br/>Process artefacts<br/>Extracts and support inputs"]
+
+    IN["Source Connections / Inputs<br/>Exports<br/>Cloud connections<br/>Reference lists<br/>Supporting files"]
+    FAB["Fabric / OneLake<br/>Curated reporting data<br/>Reusable datasets<br/>Shared business rules<br/>Standardised definitions"]
+    SEM["Semantic Models<br/>Relationships<br/>Measures<br/>Model logic<br/>Report-ready views"]
+    RPT["Dashboards / Reports<br/>Billing Reports App"]
+
+    CRM --> IN
+    SN --> IN
+    DG --> IN
+    SAP --> IN
+    SP -. reference and support inputs .-> IN
+    IN --> FAB
+    SP -. trusted reused reference data .-> FAB
+    FAB --> SEM
+    SEM --> RPT
+```
+
+This view is especially useful because it shows that billing and exception reporting is not only a dashboard problem. It is an end-to-end data architecture problem that starts with source-system ingestion, passes through governed Fabric layers, and only then becomes report-ready in Power BI.
+
 ## What This Project Covers
 
 ### 1. Source-to-Reporting Architecture Design
