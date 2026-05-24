@@ -4,6 +4,36 @@
 
 The purpose of this design is to improve how data moves from operational platforms into billing and exception reporting outputs. Instead of relying on fragmented report-level transformations, the architecture introduces a clearer flow from ingestion to reporting.
 
+## End-to-End Reporting Pattern
+
+The following diagram represents the semantic-centric reporting flow used in this project. It shows how upstream telecom business systems are first connected through an ingestion layer, then governed in Fabric / OneLake, and finally shaped into semantic models and reporting outputs.
+
+```mermaid
+flowchart LR
+    CRM["CRM<br/>Customers<br/>Orders<br/>Contracts"]
+    SN["ServiceNow<br/>Services<br/>Service items<br/>Billing attributes"]
+    DG["Datagate<br/>Usage<br/>Pricing<br/>Billing<br/>Exceptions"]
+    SAP["SAP<br/>Invoices<br/>Revenue<br/>Financial posting"]
+    SP["SharePoint<br/>Reference files<br/>Process artefacts<br/>Extracts and support inputs"]
+
+    IN["Source Connections / Inputs<br/>Exports<br/>Cloud connections<br/>Reference lists<br/>Supporting files"]
+    FAB["Fabric / OneLake<br/>Curated reporting data<br/>Reusable datasets<br/>Shared business rules<br/>Standardised definitions"]
+    SEM["Semantic Models<br/>Relationships<br/>Measures<br/>Model logic<br/>Report-ready views"]
+    RPT["Dashboards / Reports<br/>Billing Reports App"]
+
+    CRM --> IN
+    SN --> IN
+    DG --> IN
+    SAP --> IN
+    SP -. reference and support inputs .-> IN
+    IN --> FAB
+    SP -. trusted reused reference data .-> FAB
+    FAB --> SEM
+    SEM --> RPT
+```
+
+This flow is important because it makes clear that billing and exception reporting is built through several layers of preparation and interpretation. Source systems contribute raw operational, billing, finance, and reference data. Fabric then acts as the governed layer where that information is standardised and prepared for reuse. Semantic models provide the business meaning and reporting structure before dashboards are finally consumed by users.
+
 ## Source Systems
 
 The reporting environment brings together data from multiple enterprise platforms, including:
