@@ -2,28 +2,22 @@
 
 ## Aim
 
-The aim of this project is to understand and improve a complex billing and exception reporting environment by making its architecture, dashboard pathways, and semantic model relationships easier to interpret.
+The aim of this project is to design a cleaner end-to-end data architecture for billing and exception reporting in a large telecom-style operating environment.
 
 ## Why This Matters
 
-In many enterprise reporting environments, the technical issue is not always poor data quality or poor tools. The harder problem is often structural complexity:
+Billing and exception reporting in multi-platform service businesses often becomes difficult not because the tools are weak, but because the data is fragmented across commercial, operational, supplier, billing, and finance systems. When data is ingested differently across platforms, transformed inconsistently, or modelled too late in the reporting stack, business users face poor traceability and high manual effort.
 
-- too many dashboards
-- unclear dashboard purpose
-- semantic models layered on top of other models
-- limited visibility of lineage
-- high manual effort for operational teams trying to explain billing outcomes
-
-This project treats those issues as reporting design and architecture problems rather than only technical failures.
+This project addresses that challenge by designing a Microsoft Fabric-based architecture that improves how data is ingested, staged, stored, transformed, and modelled before it reaches Power BI reporting outputs.
 
 ## Main Workstreams
 
-1. Review the reporting architecture and its major layers.
-2. Map dashboard navigation paths and semantic model relationships.
-3. Explain how upstream systems feed billing and exception reporting.
-4. Build scenario-based views of how BizOps teams use priority dashboards.
-5. Design a trial Microsoft Fabric architecture that simplifies future reporting flows.
+1. Review the architecture across CRM, Datagate, ServiceNow, SAP, SharePoint, and related reporting inputs.
+2. Design a Microsoft Fabric ingestion pattern using Dataflow Gen2 and pipelines.
+3. Centralise reusable transformed outputs in a Lakehouse.
+4. Improve end-to-end data flow from ingestion through to billing and exception reporting.
+5. Design Power BI modelling patterns that connect multiple source systems into cleaner reporting views.
 
 ## Outcome
 
-The result is a portfolio-safe body of architecture notes, diagrams, and process documentation that shows how complex billing reporting environments can be analysed and communicated clearly.
+The result is a portfolio-safe enterprise data architecture case that demonstrates how Microsoft Fabric and Power BI can be used to improve billing and exception reporting across multiple interconnected platforms.
