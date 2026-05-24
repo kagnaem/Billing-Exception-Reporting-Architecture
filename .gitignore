@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.pyc
+
+# Office temp files
+~$*.docx
+~$*.pptx
+~$*.xlsx
+
+# OS files
+.DS_Store
+Thumbs.db
