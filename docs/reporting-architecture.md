@@ -1,36 +1,46 @@
-# Reporting Architecture and Semantic Model Focus
+# Reporting Architecture and Modelling Focus
 
-## Reporting Layers
+## Enterprise Reporting Context
 
-The project identifies a layered reporting pattern:
+The project is based on a large telecom-style reporting environment where billing and exception reporting depends on multiple platforms working together. The main source domains include:
 
-1. Upstream source systems and supporting files
-2. Curated reporting or semantic-model layer
-3. Power BI dashboards and report consumption
+- CRM for customer and commercial context
+- ServiceNow for service and operational context
+- Datagate for billing and usage-related billing logic
+- SAP for invoice and finance outputs
+- SharePoint and file-based sources for extracts, mappings, and reference inputs
+- additional API or supplier-side feeds where relevant
 
-This layered view helps explain how data is transformed from operational activity into business-readable reporting outputs.
+## Architecture Pattern
 
-## Key Architecture Questions
+The architecture follows a layered design:
 
-- Which systems provide the operational truth for billing-related data?
-- How do semantic models combine data from different systems?
-- Which dashboards are action-oriented, and which are mainly investigative or reference-based?
-- Where does complexity come from: data movement, model layering, dashboard design, or user navigation?
+1. Upstream source systems and file-based inputs
+2. Fabric ingestion and orchestration layer
+3. Lakehouse storage and reusable transformed data
+4. Power BI transformation, modelling, and semantic reporting layer
+5. Billing and exception reporting outputs
 
-## Semantic Model Concerns Observed
+This layered view makes the reporting flow easier to govern and easier to explain than a purely dashboard-centric design.
 
-- model purpose is not always obvious to business users
-- dashboards may depend on multiple semantic layers that are difficult to trace
-- some reporting logic appears easier to understand conceptually than to verify technically
-- BizOps users may need too much background knowledge to know which view to trust first
+## Why Fabric Becomes Central
 
-## Why Fabric Becomes Relevant
+Microsoft Fabric is used here not just as a reporting host, but as the core integration and preparation layer. In this design it is responsible for:
 
-The future-state design explored in this project uses Microsoft Fabric to move data preparation earlier into a governed layer. Instead of leaving too much logic inside chains of semantic models, the Fabric design aims to:
+- orchestrating ingestion from multiple platforms
+- supporting Dataflow Gen2 for source-specific extraction and transformation
+- centralising reusable data in a Lakehouse
+- creating a more controlled handoff into Power BI modelling
 
-- ingest each source in a more controlled way
-- centralise transformed data in a Lakehouse
-- reduce semantic-model-on-semantic-model complexity
-- expose cleaner reporting tables to Power BI
+## Power BI Modelling Role
 
-This does not replace semantic models. It makes them fewer, clearer, and easier to explain.
+Power BI remains an important part of the architecture, but its role becomes more focused. Instead of carrying too much multi-source transformation inside individual reports, Power BI is used to:
+
+- connect to curated Fabric outputs
+- apply lighter reporting transformations where needed
+- model fact and dimension relationships across multiple source systems
+- support billing and exception reporting through clearer import-mode models
+
+## Design Goal
+
+The design goal is to improve traceability from ingestion to reporting so that billing and exception reports are built on a more understandable and reusable data foundation.
