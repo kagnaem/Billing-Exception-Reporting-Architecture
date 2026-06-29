@@ -1,4 +1,4 @@
-# Billing Exception Reporting Architecture
+# Billing Exception Reporting - Ms Fabric Data Architecture
 
 Portfolio project based on a large telecom-style reporting environment, focused on improving billing and exception reporting through clearer architecture, simpler data flow, and stronger Microsoft Fabric design.
 
