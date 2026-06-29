@@ -6,7 +6,7 @@ Portfolio project based on a large telecom-style reporting environment, focused 
 
 This project examines how billing and exception reporting can become difficult when data is spread across multiple operational and billing systems, semantic models are hard to trace, and dashboard users need too much background knowledge to understand what they are looking at.
 
-The project was developed as an anonymised enterprise-style case. It focuses on how reporting can be made easier to interpret by reviewing the current structure, tracing how data moves across systems, and proposing a cleaner future-state design using Microsoft Fabric.
+Based on a real internship project and presented in anonymised form, this case study examines how billing and exception reporting operates across multiple systems, how data flows into dashboards and semantic models, and how a Microsoft Fabric design could simplify the reporting architecture.
 
 ### Main Source and Reporting Domains
 
