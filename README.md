@@ -1,93 +1,96 @@
 # Billing Exception Reporting Architecture
 
-A portfolio project modelled on the data environment of a large telecom service provider, focused on improving end-to-end billing and exception reporting across multiple enterprise platforms.
+Portfolio project based on a large telecom-style reporting environment, focused on improving billing and exception reporting through clearer architecture, simpler data flow, and stronger Microsoft Fabric design.
 
-## Overview
+## Project Information
 
-This project explores how billing and exception reporting can be redesigned using Microsoft Fabric to support cleaner ingestion, stronger data flow control, and more reliable reporting across operational, billing, supplier, and finance systems. The architecture reflects a telecom-style environment in which customer, service, usage, billing, and financial data are distributed across multiple platforms and need to be brought together into a governed reporting layer.
+This project examines how billing and exception reporting can become difficult when data is spread across multiple operational and billing systems, semantic models are hard to trace, and dashboard users need too much background knowledge to understand what they are looking at.
 
-The project is presented as a realistic enterprise architecture case, showing how Microsoft Fabric, Lakehouse storage, pipelines, Dataflow Gen2, and Power BI modelling can work together to improve reporting quality and traceability from ingestion through to dashboard consumption.
+The project was developed as an anonymised enterprise-style case. It focuses on how reporting can be made easier to interpret by reviewing the current structure, tracing how data moves across systems, and proposing a cleaner future-state design using Microsoft Fabric.
 
-## Project Focus
+### Main Source and Reporting Domains
 
-- multi-source data ingestion across CRM, Datagate, ServiceNow, SAP, SharePoint, and related systems
-- end-to-end data flow improvement from source ingestion to billing and exception reporting outputs
-- Microsoft Fabric architecture using pipelines, Dataflow Gen2, and Lakehouse storage
-- Power BI data transformation and modelling that connects data from different sources into a unified reporting layer
-- reporting architecture design for billing oversight, exception analysis, and operational reporting consistency
+- CRM for customer, account, contract, and commercial context
+- Datagate for usage, pricing, billing, and exception-related data
+- ServiceNow for service, item, and operational context
+- SAP for invoice, revenue, and finance outputs
+- SharePoint and file-based inputs for support files, mappings, and reference data
+- Power BI for dashboards, reporting views, and semantic models
+- Microsoft Fabric for future-state ingestion, orchestration, storage, and governed reporting preparation
 
-## End-to-End Reporting Flow
+## Work Done
 
-The diagram below shows the reporting pattern that sits at the centre of the project, tracing how upstream systems move into governed Fabric data, then into semantic models, and finally into billing reports and dashboards.
+### 1. Reviewed the reporting environment
 
-```mermaid
-flowchart LR
-    CRM["CRM<br/>Customers<br/>Orders<br/>Contracts"]
-    SN["ServiceNow<br/>Services<br/>Service items<br/>Billing attributes"]
-    DG["Datagate<br/>Usage<br/>Pricing<br/>Billing<br/>Exceptions"]
-    SAP["SAP<br/>Invoices<br/>Revenue<br/>Financial posting"]
-    SP["SharePoint<br/>Reference files<br/>Process artefacts<br/>Extracts and support inputs"]
+- examined the relationship between upstream systems, semantic models, and reporting outputs
+- documented how the reporting structure depends on several connected layers rather than a single simple dataset
+- identified where reporting complexity affects business interpretation
 
-    IN["Source Connections / Inputs<br/>Exports<br/>Cloud connections<br/>Reference lists<br/>Supporting files"]
-    FAB["Fabric / OneLake<br/>Curated reporting data<br/>Reusable datasets<br/>Shared business rules<br/>Standardised definitions"]
-    SEM["Semantic Models<br/>Relationships<br/>Measures<br/>Model logic<br/>Report-ready views"]
-    RPT["Dashboards / Reports<br/>Billing Reports App"]
+### 2. Analysed dashboard and semantic-model complexity
 
-    CRM --> IN
-    SN --> IN
-    DG --> IN
-    SAP --> IN
-    SP -. reference and support inputs .-> IN
-    IN --> FAB
-    SP -. trusted reused reference data .-> FAB
-    FAB --> SEM
-    SEM --> RPT
-```
+- reviewed the reporting homepage and major dashboard groupings
+- studied a dense semantic-model structure to understand why lineage and logic can be difficult to follow
+- identified semantic-model-on-semantic-model complexity as one of the key reporting pain points
 
-This view is especially useful because it shows that billing and exception reporting is not only a dashboard problem. It is an end-to-end data architecture problem that starts with source-system ingestion, passes through governed Fabric layers, and only then becomes report-ready in Power BI.
+### 3. Mapped the end-to-end reporting flow
 
-## What This Project Covers
+- traced how data moves from source systems into reporting inputs and then into business-facing dashboards
+- treated billing and exception reporting as an end-to-end data architecture problem rather than only a dashboard problem
+- clarified where handoff boundaries can create exceptions, confusion, or manual effort
 
-### 1. Source-to-Reporting Architecture Design
-- maps how customer, service, usage, billing, finance, and reference data move across the reporting environment
-- explains how a large telecom-style platform structure creates reporting complexity across multiple systems
+### 4. Designed a future-state Microsoft Fabric architecture
 
-### 2. Microsoft Fabric Ingestion and Storage Design
-- uses Dataflow Gen2 and Fabric pipelines to ingest and orchestrate data from multiple platforms
-- centralises transformed outputs in a Lakehouse for governed reuse and downstream reporting
+- proposed a Fabric-based ingestion pattern using Dataflow Gen2 for source-specific extraction
+- introduced Lakehouse storage as a central reusable data layer
+- positioned Fabric pipelines as an orchestration option for refresh flow and controlled movement between layers
+- kept Power BI focused on modelling, measures, and reporting consumption instead of carrying too much source complexity
 
-### 3. End-to-End Data Flow Improvement
-- redesigns reporting flow from upstream ingestion through transformation, storage, modelling, and report consumption
-- focuses on reducing fragmentation between source systems and reporting outputs
+## Figures
 
-### 4. Power BI Modelling and Reporting Layer
-- connects fact and dimension data from multiple systems into a cleaner reporting model
-- supports billing and exception reporting through Power BI transformation, import-mode modelling, and semantic structure
+### Figure 1. Reporting Homepage
 
-## Portfolio-Safe Deliverables
+This anonymised dashboard homepage shows how the reporting environment is organised for users. It gives context for the business-facing reporting layer and illustrates how exception and billing views are grouped for navigation.
 
-- architecture diagrams
-- end-to-end data flow diagrams
-- Microsoft Fabric ingestion and storage design notes
-- Power BI modelling and reporting architecture notes
-- business-readable documentation for enterprise reporting improvement
+![Figure 1. Reporting Homepage](assets/billing-dashboard-homepage-anonymised.png)
+
+### Figure 2. Semantic Model Complexity
+
+This semantic-model view illustrates the density of table relationships behind the reporting layer. It helps explain why traceability, reuse, and business understanding can become difficult when reporting logic is spread across many connected objects.
+
+![Figure 2. Semantic Model Complexity](assets/semantic-model-map.png)
+
+### Figure 3. Future-State Fabric Architecture
+
+This architecture diagram shows the proposed future-state design. Upstream systems are ingested through Dataflow Gen2, prepared inside the Fabric ecosystem, stored in a Lakehouse, and then exposed to Power BI for modelling, reporting, and analysis.
+
+![Figure 3. Future-State Fabric Architecture](assets/fabric-architecture-overview.png)
+
+## Key Project Value
+
+This project shows how a reporting problem can be analysed at three levels at once:
+
+- the user-facing dashboard level
+- the semantic-model and reporting-logic level
+- the future-state data architecture level
+
+Together, that work supports clearer traceability, less fragmented reporting logic, better reuse of reporting data, and a more scalable foundation for future billing and exception analysis.
 
 ## Tools and Platforms
 
 - Microsoft Fabric
-- OneLake
-- Lakehouse
-- Fabric Pipelines
 - Dataflow Gen2
+- Fabric Pipelines
+- Lakehouse
+- OneLake
 - Power BI
 - Power BI semantic models
 - SharePoint
 - Dataverse
-- API and file-based source integration
 
-## Repository Structure
+## Privacy Note
 
-- [`docs/project-summary.md`](docs/project-summary.md) - high-level project summary
-- [`docs/reporting-architecture.md`](docs/reporting-architecture.md) - architecture and modelling focus
-- [`docs/data-ingestion-and-reporting-flow.md`](docs/data-ingestion-and-reporting-flow.md) - ingestion, transformation, and reporting flow notes
-- [`assets/`](assets/) - supporting diagrams for the portfolio version
+This repository is intentionally anonymised. Company identifiers, logos, and sensitive implementation details have been removed or simplified while preserving the architecture, tooling, and analytical approach.
+
+## Supporting Notes
+
+Earlier working notes and supporting write-ups are kept in [`archive/`](archive/) so the main repository view stays focused on the consolidated project summary and figures.
