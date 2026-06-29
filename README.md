@@ -49,7 +49,7 @@ The project was developed as an anonymised enterprise-style case. It focuses on 
 
 ### Figure 1. Reporting Homepage
 
-This anonymised dashboard homepage shows how the reporting environment is organised for users. It gives context for the business-facing reporting layer and illustrates how exception and billing views are grouped for navigation.
+This figure shows a prototype reporting dashboard connected to a Lakehouse that stores curated data from multiple source systems, supporting unified billing and exception reporting.
 
 ![Figure 1. Reporting Homepage](assets/billing-dashboard-homepage-anonymised.png)
 
